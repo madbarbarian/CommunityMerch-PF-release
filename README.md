@@ -13,12 +13,12 @@ A licensable SaaS platform that enables organizations to design and sell custom 
 
 ## ▲ Deploy to Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/madbarbarian/CommunityMerch-Fundraising-Platform&env=TURSO_DATABASE_URL,TURSO_AUTH_TOKEN,BETTER_AUTH_SECRET,BETTER_AUTH_URL,NEXT_PUBLIC_APP_URL,GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,RESEND_API_KEY,EMAIL_FROM,STRIPE_SECRET_KEY,STRIPE_PUBLISHABLE_KEY,STRIPE_WEBHOOK_SECRET,PRINTFUL_API_KEY,PRINTFUL_WEBHOOK_SECRET,CLOUDFLARE_R2_ACCOUNT_ID,CLOUDFLARE_R2_ACCESS_KEY_ID,CLOUDFLARE_R2_SECRET_ACCESS_KEY,CLOUDFLARE_R2_BUCKET_NAME,CLOUDFLARE_R2_PUBLIC_URL,OPENAI_API_KEY,CRON_SECRET,PLATFORM_ADMIN_EMAIL)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/madbarbarian/CommunityMerch-PF-release&env=TURSO_DATABASE_URL,TURSO_AUTH_TOKEN,BETTER_AUTH_SECRET,BETTER_AUTH_URL,NEXT_PUBLIC_APP_URL,GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,RESEND_API_KEY,EMAIL_FROM,STRIPE_SECRET_KEY,STRIPE_PUBLISHABLE_KEY,STRIPE_WEBHOOK_SECRET,PRINTFUL_API_KEY,PRINTFUL_WEBHOOK_SECRET,CLOUDFLARE_R2_ACCOUNT_ID,CLOUDFLARE_R2_ACCESS_KEY_ID,CLOUDFLARE_R2_SECRET_ACCESS_KEY,CLOUDFLARE_R2_BUCKET_NAME,CLOUDFLARE_R2_PUBLIC_URL,OPENAI_API_KEY,CRON_SECRET,PLATFORM_ADMIN_EMAIL)
 
 Clicking the button opens Vercel's guided setup — you'll be prompted to enter each service credential with a description of where to find it.
 
 > **Before deploying:** Prepare your service accounts and credentials first.
-> → **[Licensee Preparation Checklist](docs/2-setup/licensee-preparation-checklist.md)**
+> → **[Licensee Preparation Checklist](docs/licensee-preparation-checklist.md)**
 
 **【日本語補足】** デプロイボタンを押すと、Vercel の画面で必要な認証情報を1つずつ入力するフローが始まります。事前に各サービスのアカウントを作成し、APIキーを取得しておく必要があります。準備手順は上記チェックリストを参照してください。
 
@@ -39,12 +39,10 @@ Clicking the button opens Vercel's guided setup — you'll be prompted to enter 
 
 ---
 
-## 🚀 For Licensees
-
-### Setup Flow
+## 🚀 Setup Flow
 
 1. **Prepare** — Create accounts and gather credentials for all required services
-   → [Licensee Preparation Checklist](docs/2-setup/licensee-preparation-checklist.md)
+   → [Licensee Preparation Checklist](docs/licensee-preparation-checklist.md)
 
 2. **Deploy** — Click the **Deploy to Vercel** button above and enter your credentials when prompted
 
@@ -54,13 +52,13 @@ Clicking the button opens Vercel's guided setup — you'll be prompted to enter 
    - Steps 3–8: Verify each service is connected (Turso, Stripe, Printful, Resend, OpenAI, R2)
    - Step 9: Launch — your platform goes live and you're redirected to `/admin`
 
-4. **Manage** — Use `/admin` as your platform control panel:
-   - View all organizations and their campaigns
-   - Create discount codes for early adopters
-   - Suspend organizations if needed
-   - Manage platform staff roles
+4. **Manage** — Use `/admin` as your platform control panel
 
-### Required Services
+→ **[Full Setup Guide](docs/00-START-HERE.md)**
+
+---
+
+## 🔧 Required Services
 
 | Service | Purpose | Free Tier |
 |---------|---------|-----------|
@@ -76,106 +74,10 @@ Clicking the button opens Vercel's guided setup — you'll be prompted to enter 
 
 ---
 
-## 🛠 For Developers
-
-### Local Development
-
-```bash
-# 1. Clone and install
-git clone https://github.com/madbarbarian/CommunityMerch-Fundraising-Platform.git
-cd CommunityMerch-Fundraising-Platform
-npm install
-
-# 2. Configure environment
-cp .env.local.sample .env.local
-# Edit .env.local with your credentials
-
-# 3. Apply database schema
-node --env-file=.env.local ./node_modules/.bin/drizzle-kit push
-
-# 4. Start dev server
-npm run dev
-# → http://localhost:3000
-```
-
-### Commands
-
-```bash
-npm run dev        # Dev server with Turbopack hot reload
-npm run build      # Production build
-npm test           # Vitest unit tests
-npx tsc --noEmit   # TypeScript type check
-npm run lint       # Lint (src/ only)
-
-# Database
-node --env-file=.env.local ./node_modules/.bin/drizzle-kit push     # Apply schema changes
-node --env-file=.env.local ./node_modules/.bin/drizzle-kit studio   # DB GUI
-```
-
-### Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 16 (App Router, TypeScript) |
-| Styling | Tailwind CSS v4 + shadcn/ui |
-| Database | Turso (libSQL / SQLite) |
-| ORM | Drizzle ORM |
-| Auth | Better Auth (Google OAuth + magic link) |
-| Payments | Stripe + Stripe Connect |
-| Fulfillment | Printful API |
-| File Storage | Cloudflare R2 |
-| Email | Resend |
-| AI Design | OpenAI gpt-image-1 |
-| Testing | Vitest |
-| Hosting | Vercel |
-
-### Directory Structure
-
-```
-src/
-├── app/
-│   ├── admin/          # Platform admin panel (/admin)
-│   ├── setup/          # Setup Wizard (/setup/step/[step])
-│   ├── dashboard/      # Org management dashboard
-│   ├── (public)/       # Public campaign pages (/<slug>)
-│   ├── api/            # API routes (checkout, webhooks, upload, ai-design)
-│   └── sign-in/        # Authentication pages
-├── lib/
-│   ├── db/             # Drizzle schema + client
-│   ├── providers/      # Stripe, Printful, OpenAI, R2 clients
-│   ├── admin.ts        # Platform admin operations
-│   ├── campaigns.ts    # Campaign CRUD
-│   ├── discount-codes.ts # Discount code logic + fee calculation
-│   ├── fulfillment.ts  # Printful order orchestration
-│   └── ...
-└── components/         # Shared UI components
-docs/
-├── 1-requirements/     # Product requirements
-├── 2-setup/            # Licensee setup guides
-├── 3-development/      # System design, architecture
-└── 5-project-management/ # Changelog, implementation plans
-tests/results/          # QA screenshots per plan
-```
-
-**【日本語補足】** ローカル開発は通常のNext.jsプロジェクトと同じ手順です。`.env.local.sample` をコピーして各サービスの認証情報を入力するだけで起動できます。
-
----
-
-## 📚 Documentation
-
-| Document | Description |
-|---------|-------------|
-| [Licensee Preparation Checklist](docs/2-setup/licensee-preparation-checklist.md) | Step-by-step guide to set up each required service |
-| [System Design](docs/3-development/system-design.md) | Architecture, data models, implementation plans |
-| [Requirements](docs/1-requirements/requirements.md) | Full product requirements and specifications |
-| [Changelog](docs/5-project-management/CHANGELOG.md) | Version history and release notes |
-
----
-
 ## License
 
 Proprietary. All rights reserved.
 
 This platform is licensed, not sold. Each deployment requires a separate license agreement. Contact the IP owner for licensing terms.
 
-**【日本語補足】** このプラットフォームはオープンソースではありません。ライセンス契約に基づいてのみ使用できます。ライセンス取得については IP オーナー（Keith）にお問い合わせください。
+**【日本語補足】** このプラットフォームはオープンソースではありません。ライセンス契約に基づいてのみ使用できます。ライセンス取得については IP オーナーにお問い合わせください。
