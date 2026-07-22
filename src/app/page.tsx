@@ -53,6 +53,11 @@ export default async function LandingPage() {
       >
         Get Started — Free
       </Link>
+
+      <footer className="mt-10 flex gap-4 text-xs text-gray-400">
+        <Link href="/terms" className="underline hover:text-gray-600">Terms of Service</Link>
+        <Link href="/privacy" className="underline hover:text-gray-600">Privacy Policy</Link>
+      </footer>
     </div>
   )
 }
