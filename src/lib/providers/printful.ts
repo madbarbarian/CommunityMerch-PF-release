@@ -71,6 +71,9 @@ export async function getPrintfulVariantId(
 
 // Submit a fulfillment order to Printful.
 // Uses external_id = orderId for idempotency — Printful deduplicates on this field.
+// Orders are confirmed (sent to production and billed to the platform owner's
+// Printful payment method) automatically unless PRINTFUL_AUTO_CONFIRM=false,
+// which leaves them as drafts for manual review in the Printful dashboard.
 export async function submitPrintfulOrder(
   orderId: string,
   recipient: PrintfulRecipient,
@@ -83,7 +86,9 @@ export async function submitPrintfulOrder(
     items,
   }
 
-  const res = await fetch(`${BASE_URL}/orders`, {
+  const autoConfirm = process.env.PRINTFUL_AUTO_CONFIRM !== "false"
+
+  const res = await fetch(`${BASE_URL}/orders${autoConfirm ? "?confirm=1" : ""}`, {
     method: "POST",
     headers: {
       Authorization: AUTH,

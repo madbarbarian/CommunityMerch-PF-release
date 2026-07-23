@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+---
+
+## [1.5.0] - 2026-07-23
+
+### Changed
+- **Printful 注文を自動確定に変更**: 従来は注文が Printful 上で「ドラフト」として止まり、運営者が1件ずつ手動で Confirm する必要があった（押し忘れ = 配送遅延）。デフォルトで自動確定し、そのまま印刷工程へ進むように変更。環境変数 `PRINTFUL_AUTO_CONFIRM=false` で従来のドラフト運用に戻せる
+- セットアップガイドに **Printful の支払い方法登録が必須**である旨を追記（未登録だと注文確定が失敗するため）
+
 ### Added
 - リリースごとの Git タグ運用を導入: `/release` スキルが開発リポジトリに `vX.Y.Z` タグを付与し、同期 workflow がリリースリポジトリにも同名タグを自動付与。過去分（v1.0.0〜v1.4.0）も遡及してタグ付け
 - **GitHub Release の自動発行**: リリースごとに、CHANGELOG の該当バージョン部分をリリースノートとして公開リポジトリに Release を自動作成（`RELEASE_REPO_TOKEN` シークレット使用）。ライセンシーは公開リポジトリを Watch → Custom → Releases に設定するだけで新バージョン通知を受け取れる（ガイドに手順を追記）
