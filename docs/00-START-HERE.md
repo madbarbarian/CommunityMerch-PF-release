@@ -105,7 +105,7 @@ Phase 5: セットアップウィザードで最終確認 → ローンチ
 購入者が商品を買うときの支払いを受け付け、組織の銀行口座に送金します。
 取引ごとに手数料が発生しますが、月額料金はありません。
 
-**何を取得するか:** `STRIPE_SECRET_KEY`、`STRIPE_PUBLISHABLE_KEY`、`STRIPE_WEBHOOK_SECRET`
+**何を取得するか:** `STRIPE_SECRET_KEY`、`STRIPE_PUBLISHABLE_KEY`、`STRIPE_WEBHOOK_SECRET`、`STRIPE_CONNECT_WEBHOOK_SECRET`
 
 **手順（APIキーの取得）:**
 1. [https://stripe.com](https://stripe.com) を開く → **「Start now」** で登録
@@ -120,7 +120,7 @@ Phase 5: セットアップウィザードで最終確認 → ローンチ
 Webhook は「Stripe からアプリへの通知」の設定です。
 デプロイ後に URL が確定してから設定します → Phase 4 で案内します。
 
-今はメモに `STRIPE_WEBHOOK_SECRET = あとで設定` と書いておいてください。
+今はメモに `STRIPE_WEBHOOK_SECRET = あとで設定`、`STRIPE_CONNECT_WEBHOOK_SECRET = あとで設定` と書いておいてください（デプロイ後の Phase 4 で2本の Webhook を作って取得します）。
 
 ---
 
@@ -285,6 +285,7 @@ X7kPqR2mNvLwHs4cBjYeAf9dZuMtGnVo1iCxKpEb6=
 | `STRIPE_SECRET_KEY` | ☐ |
 | `STRIPE_PUBLISHABLE_KEY` | ☐ |
 | `STRIPE_WEBHOOK_SECRET` | ☐（あとで設定） |
+| `STRIPE_CONNECT_WEBHOOK_SECRET` | ☐（あとで設定） |
 | `PRINTFUL_API_KEY` | ☐ |
 | `PRINTFUL_WEBHOOK_SECRET` | ☐（あとで設定） |
 | `CLOUDFLARE_R2_ACCOUNT_ID` | ☐ |
@@ -344,6 +345,7 @@ X7kPqR2mNvLwHs4cBjYeAf9dZuMtGnVo1iCxKpEb6=
 | `STRIPE_SECRET_KEY` | Stripe のシークレットキー |
 | `STRIPE_PUBLISHABLE_KEY` | Stripe の公開キー |
 | `STRIPE_WEBHOOK_SECRET` | まだ不明 → 空欄のまま |
+| `STRIPE_CONNECT_WEBHOOK_SECRET` | まだ不明 → 空欄のまま |
 | `PRINTFUL_API_KEY` | Printful の API キー |
 | `PRINTFUL_WEBHOOK_SECRET` | まだ不明 → 空欄のまま |
 | `CLOUDFLARE_R2_ACCOUNT_ID` | Cloudflare のアカウント ID |
