@@ -464,6 +464,8 @@ EMAIL_FROM=noreply@あなたのドメイン.com
 STRIPE_SECRET_KEY=sk_test_ここに入力（本番は sk_live_...）
 STRIPE_PUBLISHABLE_KEY=pk_test_ここに入力（本番は pk_live_...）
 STRIPE_WEBHOOK_SECRET=whsec_ここに入力
+# 団体の口座連携の完了検知用（Connected accounts エンドポイントのシークレット・別途発行）
+STRIPE_CONNECT_WEBHOOK_SECRET=whsec_ここに入力
 
 # ─── Cloudflare R2（ファイルストレージ）────────────────────────────────────
 CLOUDFLARE_R2_ACCOUNT_ID=ここに入力

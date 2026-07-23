@@ -450,15 +450,32 @@ GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
 
 ---
 
-### 4-2. Stripe の Webhook を設定する
+### 4-2. Stripe の Webhook を設定する（2本必要です）
+
+Stripe の仕様で、「注文の通知」と「団体の口座連携完了の通知」は**別々の Webhook** として登録する必要があります。同じ手順を2回繰り返します。
 
 1. [https://dashboard.stripe.com](https://dashboard.stripe.com) を開く
-2. 左メニュー **「Developers」** → **「Webhooks」** → **「Add endpoint」**
-3. 以下を入力:
-   - Endpoint URL: `https://（あなたのURL）.vercel.app/api/webhooks/stripe`
-   - Events: **「Select events」** → `payment_intent.succeeded`、`checkout.session.completed` を選択
-4. **「Add endpoint」** をクリック
-5. 作成された Webhook の **「Signing secret」** → **「Reveal」** → コピー → `STRIPE_WEBHOOK_SECRET`
+2. 画面**左下**の **「Developers」**（`</>` アイコン）をクリック → 「Workbench」パネルが開く
+   （見つからない場合は上部の検索バーに「webhooks」と入力）
+3. **「Webhooks」タブ** → **「+ Create an event destination」** をクリック
+
+**1本目 — 注文の通知用:**
+
+4. **Events from**: 「**Your account**」を選択
+5. イベント検索欄に `checkout.session.completed` と入力してチェック → Continue
+6. Destination type: 「**Webhook endpoint**」→ Continue
+7. Endpoint URL: `https://（あなたのURL）.vercel.app/api/webhooks/stripe` → **Create**
+8. 作成された destination の **「Signing secret」** → 「Reveal」→ コピー → `STRIPE_WEBHOOK_SECRET`
+
+**2本目 — 口座連携完了の通知用:**
+
+9. もう一度 **「+ Create an event destination」**
+10. **Events from**: 「**Connected accounts**」を選択（ここが1本目との違い）
+11. イベント検索欄で `account.updated` にチェック → Continue
+12. Destination type: 「**Webhook endpoint**」→ URL は1本目と**同じ** `https://（あなたのURL）.vercel.app/api/webhooks/stripe` → **Create**
+13. こちらの **「Signing secret」** をコピー → `STRIPE_CONNECT_WEBHOOK_SECRET`（1本目とは別の値になります）
+
+> ⚠️ 2本目を忘れると、団体が銀行口座を連携しても「連携完了」と認識されず、キャンペーンの公開・購入ができません。
 
 ### 4-3. Printful の Webhook を設定する
 
@@ -471,8 +488,9 @@ GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
 
 1. [https://vercel.com](https://vercel.com) → 自分のプロジェクトをクリック
 2. **「Settings」** → **「Environment Variables」**
-3. 以下の2つを追加:
-   - `STRIPE_WEBHOOK_SECRET` → 4-2 で取得した値
+3. 以下の3つを追加:
+   - `STRIPE_WEBHOOK_SECRET` → 4-2 の1本目で取得した値
+   - `STRIPE_CONNECT_WEBHOOK_SECRET` → 4-2 の2本目で取得した値
    - `PRINTFUL_WEBHOOK_SECRET` → 4-3 で取得した値
 4. **「Save」** → プロジェクトを **「Redeploy」**（Deployments タブ → 最新の Deployment → 「...」→ 「Redeploy」）
 
