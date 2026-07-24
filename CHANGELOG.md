@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.7.0] - 2026-07-24
+
+### Added
+- **ランディングページに「What you'll need」セクションを追加**: 口座連携に必要なもの3点（EIN/SSN・銀行口座・約10分）をアイコン付きカードで表示し、スクロールで表示されると順番にアニメーション → 最後に「You're ready to {プラットフォーム名}!」のチェックバッジが出る。「キャンペーンは先に作れて、公開直前の口座連携でOK」の一文も明記（PTA など団体側の心理的ハードルを下げる施策。prefers-reduced-motion 対応済み）
+
+---
+
 ## [1.6.1] - 2026-07-24
 
 ### Added

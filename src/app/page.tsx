@@ -4,6 +4,7 @@ import { getOrCreateConfig } from "@/lib/platform-config"
 import { getLandingContent } from "@/lib/landing-content-db"
 import { buildStatTiles, getLandingStats } from "@/lib/landing-stats"
 import { HowItWorks } from "@/components/landing/how-it-works"
+import { ReadyChecklist } from "@/components/landing/ready-checklist"
 import { StatBand } from "@/components/landing/stat-band"
 import { Testimonials } from "@/components/landing/testimonials"
 import { Faq } from "@/components/landing/faq"
@@ -81,6 +82,7 @@ export default async function LandingPage() {
       </section>
 
       <HowItWorks steps={content.howItWorks} accentColor={config.accentColor} />
+      <ReadyChecklist platformName={config.platformName} accentColor={config.accentColor} />
       <StatBand tiles={statTiles} primaryColor={config.primaryColor} />
       <Testimonials items={content.testimonials} accentColor={config.accentColor} />
       <Faq items={content.faqs} />
